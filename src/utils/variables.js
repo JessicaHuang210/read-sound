@@ -5,6 +5,15 @@ export const gradientBg = "linear-gradient(to left, #F1AD56, #DB7290)";
 
 export const mainBg = "#f5e9ec";
 
+export const secondaryBg = "#fff7fa";
+
+//font-color
+export const fcTable = "#7d7778";
+
+//font-size
+export const fsNormal = "1.4rem";
+export const fsMiddle = "1.6rem";
+
 // rwd
 export const size = {
   mobileS: "320px",
