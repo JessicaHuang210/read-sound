@@ -23,22 +23,43 @@ const TdC = styled.td`
 `;
 
 class Table extends Component {
+  state = {
+    data: [
+      { id: 1, singer: 1, songName: "祢真好", fileName: "祢真好.pdf" },
+      {
+        id: 2,
+        singer: 2,
+        songName: "大山為我挪開",
+        fileName: "329DWF42.pdf"
+      }
+    ],
+    singerArr: [
+      { id: 1, name: "約書亞樂團" },
+      { id: 2, name: "讚美之泉" }
+    ]
+  };
   render() {
+    const { singerArr, data } = this.state;
     return (
       <TableC>
         <TbodyC>
-          <TrC>
-            <TdC>0000</TdC>
-            <TdC right>
-              <Button>xxx.pdf</Button>
-            </TdC>
-          </TrC>
-          <TrC>
-            <TdC>0000</TdC>
-            <TdC right>
-              <Button>xxx.pdf</Button>
-            </TdC>
-          </TrC>
+          {data.map(i => {
+            return (
+              <TrC>
+                <TdC>{i.songName}</TdC>
+                <TdC>
+                  {
+                    singerArr.find(j => {
+                      return j.id === i.singer;
+                    }).name
+                  }
+                </TdC>
+                <TdC right>
+                  <Button>{i.fileName}</Button>
+                </TdC>
+              </TrC>
+            );
+          })}
         </TbodyC>
       </TableC>
     );
