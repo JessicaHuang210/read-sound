@@ -1,18 +1,24 @@
 // 選單背景
-export const headerBg = "#DB7290";
+export const headerBg = "#DB7290"; //btn primary
+export const secondaryBg = "#fff7fa";
+export const smallBtnBg = "#faf0f1"; //btn small
+
 // 漸層背景
 export const gradientBg = "linear-gradient(to left, #F1AD56, #DB7290)";
 
 export const mainBg = "#f5e9ec";
 
-export const secondaryBg = "#fff7fa";
-
 //font-color
 export const fcTable = "#7d7778";
+export const fcTableTitle = "#523e43";
+export const fcLight = "#999";
 
 //font-size
 export const fsNormal = "1.4rem";
 export const fsMiddle = "1.6rem";
+
+// input
+export const disabledColor = "#f8f8f8";
 
 // rwd
 export const size = {

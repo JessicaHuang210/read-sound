@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
-import { fcTable, secondaryBg } from "utils/variables";
+import { fcTable, fcTableTitle, secondaryBg } from "utils/variables";
 import Button from "components/Button";
 const TableC = styled.table`
   width: 100%;
@@ -17,45 +18,52 @@ const TrC = styled.tr`
   }
 `;
 const TdC = styled.td`
-  color: ${fcTable};
+  color: ${prop => (prop.head ? fcTableTitle : fcTable)};
   padding: 2rem;
-  text-align: ${props => (props.right ? "right" : "center")};
+  text-align: ${prop => (prop.right ? "right" : "center")};
 `;
 
 class Table extends Component {
-  state = {
-    data: [
-      { id: 1, singer: 1, songName: "祢真好", fileName: "祢真好.pdf" },
-      {
-        id: 2,
-        singer: 2,
-        songName: "大山為我挪開",
-        fileName: "329DWF42.pdf"
-      }
-    ],
-    singerArr: [
-      { id: 1, name: "約書亞樂團" },
-      { id: 2, name: "讚美之泉" }
-    ]
+  static propTypes = {
+    data: PropTypes.array,
+    onDetailClick: PropTypes.func,
+    onDeleteClick: PropTypes.func,
+    children: PropTypes.node
+  };
+
+  static defaultProps = {
+    data: [],
+    children: null
   };
   render() {
-    const { singerArr, data } = this.state;
+    const { data } = this.props;
     return (
       <TableC>
         <TbodyC>
           {data.map(i => {
             return (
-              <TrC>
-                <TdC>{i.songName}</TdC>
-                <TdC>
-                  {
-                    singerArr.find(j => {
-                      return j.id === i.singer;
-                    }).name
-                  }
-                </TdC>
+              <TrC key={i._id}>
+                <TdC head>{i.name}</TdC>
+                <TdC>{i.singer}</TdC>
+                <TdC>{i.album || "-"}</TdC>
                 <TdC right>
-                  <Button>{i.fileName}</Button>
+                  <Button mute small>
+                    下載
+                  </Button>
+                  <Button
+                    mute
+                    small
+                    onClick={() => this.props.onDeleteClick(i._id)}
+                  >
+                    刪除
+                  </Button>
+                  <Button
+                    mute
+                    small
+                    onClick={() => this.props.onDetailClick(i._id)}
+                  >
+                    明細
+                  </Button>
                 </TdC>
               </TrC>
             );
