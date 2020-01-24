@@ -14,6 +14,10 @@ const songSchema = new mongoose.Schema({
   },
   fileName: {
     type: String
+  },
+  youtubeURL: {
+    type: String,
+    default: ""
   }
 });
 

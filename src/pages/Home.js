@@ -7,43 +7,69 @@ import Table from "components/Table";
 class Home extends Component {
   state = {
     songLsit: [],
-    keyword: ""
+    keyword: "",
+    isLoading: false
   };
   componentDidMount() {
     this.getSongs();
   }
   getSongs = async (val = "") => {
-    console.log(val);
     this.setState({ keyword: val.trim() });
-
     var url = new URL(process.env.REACT_APP_API_URL + "/getSongs"),
       params = { keywords: val };
     Object.keys(params).forEach(key =>
       url.searchParams.append(key, params[key])
     );
-
     const res = await fetch(url);
     const list = await res.json();
     this.setState({ songLsit: list });
   };
-  handleDetailClick = async id => {
-    const res = await fetch(process.env.REACT_APP_API_URL + "/getSongs/" + id);
-    console.log(await res.json());
+  handleDetailClick = id => {
+    this.props.history.push({ pathname: "/EditSong/" + id });
   };
   handleDeleteClick = async id => {
-    const res = await fetch(process.env.REACT_APP_API_URL + "/getSongs/" + id, {
+    const option = {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json"
       })
+    };
+    await fetch(process.env.REACT_APP_API_URL + "/getSongs/" + id, option);
+    await this.getSongs();
+  };
+  handleCreatedClick = async state => {
+    const params = {
+      name: state.name,
+      singer: state.singer,
+      album: state.album,
+      fileName: state.fileName
+    };
+    let isValidateFailed = false;
+    Object.keys(params).forEach(i => {
+      if (i === "name" || i === "singer") {
+        params[i] === "" && (isValidateFailed = true);
+        return;
+      }
     });
-    console.log(await res.json());
+    if (isValidateFailed) return;
+    this.setState({ isLoading: true });
+    await fetch("http://localhost:1313/getSongs", {
+      method: "POST", // or 'PUT'
+      body: JSON.stringify(params), // data can be `string` or {object}!
+      headers: new Headers({
+        "Content-Type": "application/json"
+      })
+    });
+    this.setState({ isLoading: false });
     await this.getSongs();
   };
   render() {
     return (
       <Fragment>
-        <AddSong onCreatedSong={this.getSongs} />
+        <AddSong
+          isLoading={this.state.isLoading}
+          onCreatedClick={this.handleCreatedClick}
+        />
         <SearchSongs
           keyword={this.state.keyword}
           onSearchSong={this.getSongs}

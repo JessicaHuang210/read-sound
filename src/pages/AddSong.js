@@ -9,8 +9,7 @@ class AddSong extends Component {
     name: "",
     singer: "",
     album: "",
-    fileName: "",
-    isLoading: false
+    fileName: ""
   };
   handleChange = e => {
     const val = e.target.value;
@@ -20,42 +19,12 @@ class AddSong extends Component {
   handleReset = () => {
     this.setState({ name: "", singer: "", album: "", fileName: "" });
   };
-  handleClick = async () => {
-    const { name, singer, album, fileName } = this.state;
-    const params = {
-      name,
-      singer,
-      album,
-      fileName
-    };
-    let isValidateFailed = false;
-    Object.keys(params).forEach(i => {
-      if (i === "name" || i === "singer") {
-        params[i] === "" && (isValidateFailed = true);
-        return;
-      }
-    });
-    if (!isValidateFailed) {
-      this.setState({ isLoading: true });
-      const res = await fetch("http://localhost:1313/getSongs", {
-        method: "POST", // or 'PUT'
-        body: JSON.stringify(params), // data can be `string` or {object}!
-        headers: new Headers({
-          "Content-Type": "application/json"
-        })
-      });
-      console.log(await res.json());
-      this.setState({ isLoading: false });
-      this.handleReset();
-      this.props.onCreatedSong();
-    }
-  };
 
   static propTypes = {
-    onCreatedSong: PropTypes.func
+    onCreatedClick: PropTypes.func
   };
   render() {
-    const { name, singer, album, fileName, isLoading } = this.state;
+    const { name, singer, album, fileName } = this.state;
     return (
       <FormWrap>
         <FormItem>
@@ -95,7 +64,14 @@ class AddSong extends Component {
           />
         </FormItem>
         <FormAction>
-          <Button disabled={isLoading} onClick={this.handleClick} block>
+          <Button
+            disabled={this.props.isLoading}
+            onClick={() => {
+              this.props.onCreatedClick(this.state);
+              this.handleReset();
+            }}
+            block
+          >
             新增
           </Button>
         </FormAction>

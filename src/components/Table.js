@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { fcTable, fcTableTitle, secondaryBg } from "utils/variables";
 import Button from "components/Button";
+
 const TableC = styled.table`
   width: 100%;
   margin: 2rem 0;
@@ -40,9 +43,10 @@ class Table extends Component {
     return (
       <TableC>
         <TbodyC>
-          {data.map(i => {
+          {data.map((i, index) => {
             return (
               <TrC key={i._id}>
+                <TdC>{index + 1}</TdC>
                 <TdC head>{i.name}</TdC>
                 <TdC>{i.singer}</TdC>
                 <TdC>{i.album || "-"}</TdC>

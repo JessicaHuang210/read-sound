@@ -6,7 +6,7 @@ const songModule = require("../models/song");
 router.get("/", async (req, res) => {
   console.log(req.query);
   let params = {
-    name: new RegExp(req.query.keywords)
+    name: new RegExp(req.query.keywords || "")
   };
   try {
     const songs = await songModule.find(params); // mongoose的「查詢」用法
