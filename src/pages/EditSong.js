@@ -44,9 +44,9 @@ class EditSong extends Component {
           <FormLabel>檔名</FormLabel>
           <InputText defaultValue={fileName} />
         </FormItem>
-        <div>
-          <Button>儲存</Button>
-        </div>
+        <FormAction block>
+          <Button block>儲存</Button>
+        </FormAction>
       </FormWrap>
     );
   }

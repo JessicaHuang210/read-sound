@@ -29,4 +29,6 @@ export const FormAction = styled.div`
   margin-bottom: 2rem;
   display: flex;
   flex: 1 1 auto;
+  justify-content: center;
+  width: ${prop => (prop.block ? "100%" : "")};
 `;

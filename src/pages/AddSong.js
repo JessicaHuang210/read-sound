@@ -26,7 +26,7 @@ class AddSong extends Component {
   render() {
     const { name, singer, album, fileName } = this.state;
     return (
-      <FormWrap>
+      <FormWrap inline>
         <FormItem>
           <InputText
             type="text"
