@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const songModule = require("../models/song");
+const sleep = require("../utils/sleep");
 
 // 取得所有歌曲清單
 router.get("/", async (req, res) => {
-  console.log(req.query);
-  let params = {
-    name: new RegExp(req.query.keywords || "")
+  const params = {
+    name: new RegExp(req.query.name || ""),
+    singer: new RegExp(req.query.singer || "")
   };
   try {
     const songs = await songModule.find(params); // mongoose的「查詢」用法
@@ -26,12 +27,25 @@ router.post("/", async (req, res) => {
   const songParams = new songModule({
     name: req.body.name,
     singer: req.body.singer,
-    album: req.body.album,
-    fileName: req.body.fileName
+    album: req.body.album
   });
   try {
     const newSong = await songParams.save(); // mongoose的「新增」用法
     res.status(201).json(newSong);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// 編輯歌曲
+router.patch("/:id", getSongInfo, async (req, res) => {
+  Object.keys(req.body).forEach(i => {
+    req.body[i] !== null && (res.song[i] = req.body[i]);
+  });
+  try {
+    await res.song.save();
+    await sleep(1000);
+    res.status(204).json();
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

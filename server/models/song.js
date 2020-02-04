@@ -10,10 +10,12 @@ const songSchema = new mongoose.Schema({
     required: true
   },
   album: {
-    type: String
+    type: String,
+    default: ""
   },
   fileName: {
-    type: String
+    type: String,
+    default: ""
   },
   youtubeURL: {
     type: String,

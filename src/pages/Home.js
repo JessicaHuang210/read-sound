@@ -13,10 +13,9 @@ class Home extends Component {
   componentDidMount() {
     this.getSongs();
   }
-  getSongs = async (val = "") => {
-    this.setState({ keyword: val.trim() });
+  getSongs = async (obj = {}) => {
     var url = new URL(process.env.REACT_APP_API_URL + "/getSongs"),
-      params = { keywords: val };
+      params = obj;
     Object.keys(params).forEach(key =>
       url.searchParams.append(key, params[key])
     );
@@ -53,7 +52,7 @@ class Home extends Component {
     });
     if (isValidateFailed) return;
     this.setState({ isLoading: true });
-    await fetch("http://localhost:1313/getSongs", {
+    await fetch(process.env.REACT_APP_API_URL + "/getSongs", {
       method: "POST", // or 'PUT'
       body: JSON.stringify(params), // data can be `string` or {object}!
       headers: new Headers({
@@ -62,6 +61,10 @@ class Home extends Component {
     });
     this.setState({ isLoading: false });
     await this.getSongs();
+  };
+  hanbleSingerClick = singer => {
+    console.log(singer);
+    this.getSongs({ singer });
   };
   render() {
     return (
@@ -78,6 +81,7 @@ class Home extends Component {
         <Table
           onDeleteClick={this.handleDeleteClick}
           onDetailClick={this.handleDetailClick}
+          onSingerClick={this.hanbleSingerClick}
           data={this.state.songLsit}
         />
       </Fragment>

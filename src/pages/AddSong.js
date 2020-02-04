@@ -8,8 +8,7 @@ class AddSong extends Component {
   state = {
     name: "",
     singer: "",
-    album: "",
-    fileName: ""
+    album: ""
   };
   handleChange = e => {
     const val = e.target.value;
@@ -17,14 +16,15 @@ class AddSong extends Component {
     this.setState({ [stateName]: val.trim() });
   };
   handleReset = () => {
-    this.setState({ name: "", singer: "", album: "", fileName: "" });
+    this.setState({ name: "", singer: "", album: "" });
   };
 
   static propTypes = {
     onCreatedClick: PropTypes.func
   };
   render() {
-    const { name, singer, album, fileName } = this.state;
+    const { name, singer, album } = this.state;
+    const isCreateDisabled = !name || !singer;
     return (
       <FormWrap inline>
         <FormItem>
@@ -54,18 +54,9 @@ class AddSong extends Component {
             onChange={this.handleChange}
           />
         </FormItem>
-        <FormItem>
-          <InputText
-            type="text"
-            value={fileName}
-            name="fileName"
-            placeholder="檔名"
-            onChange={this.handleChange}
-          />
-        </FormItem>
         <FormAction>
           <Button
-            disabled={this.props.isLoading}
+            disabled={isCreateDisabled}
             onClick={() => {
               this.props.onCreatedClick(this.state);
               this.handleReset();

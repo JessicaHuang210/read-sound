@@ -65,6 +65,10 @@ textarea {
 a {
   text-decoration: none;
   cursor: pointer;
+  color:inherit;
+}
+a:hover{
+  text-decoration: underline;
 }
 button {
   padding: 0;

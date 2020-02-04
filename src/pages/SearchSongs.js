@@ -4,10 +4,6 @@ import InputText from "components/InputText";
 import { FormWrap, FormItem } from "components/Form";
 
 class SearchSongs extends Component {
-  state = {
-    keywords: ""
-  };
-
   static propTypes = {
     onSearchSong: PropTypes.func
   };
@@ -17,11 +13,13 @@ class SearchSongs extends Component {
       <FormWrap>
         <FormItem>
           <InputText
-            type="text"
+            type="search"
             value={this.props.keywords}
             name="keywords"
             placeholder="搜尋歌名..."
-            onChange={e => this.props.onSearchSong(e.target.value.trim())}
+            onChange={e =>
+              this.props.onSearchSong({ name: e.target.value.trim() })
+            }
           />
         </FormItem>
       </FormWrap>
