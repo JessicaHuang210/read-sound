@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { H3 } from "components/Typography";
 import SearchSongs from "./SearchSongs";
 import Table from "components/Table";
 
