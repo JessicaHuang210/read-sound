@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
 // 編輯歌曲
 router.patch("/:id", getSongInfo, async (req, res) => {
   Object.keys(req.body).forEach(i => {
-    req.body[i] !== null && (res.song[i] = req.body[i]);
+    res.song[i] = req.body[i];
   });
   try {
     await res.song.save();

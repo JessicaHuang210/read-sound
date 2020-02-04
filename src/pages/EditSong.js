@@ -90,7 +90,11 @@ class EditSong extends Component {
         </FormItem>
         <FormItem>
           <FormLabel>檔名</FormLabel>
-          <InputText defaultValue={fileName} onChange={this.handleChange} />
+          <InputText
+            defaultValue={fileName}
+            name="fileName"
+            onChange={this.handleChange}
+          />
         </FormItem>
         <FormAction block>
           <Button block light onClick={this.handleGoback}>
