@@ -5,9 +5,14 @@ import { FormWrap, FormItem } from "components/Form";
 
 class SearchSongs extends Component {
   static propTypes = {
-    onSearchSong: PropTypes.func
+    searchKey: PropTypes.string,
+    onSearchSong: PropTypes.func,
+    placeholder: PropTypes.string
   };
-
+  static defaultProps = {
+    searchKey: "name",
+    placeholder: "搜尋歌名..."
+  };
   render() {
     return (
       <FormWrap>
@@ -16,9 +21,11 @@ class SearchSongs extends Component {
             type="search"
             value={this.props.keywords}
             name="keywords"
-            placeholder="搜尋歌名..."
+            placeholder={this.props.placeholder}
             onChange={e =>
-              this.props.onSearchSong({ name: e.target.value.trim() })
+              this.props.onSearchSong({
+                [this.props.searchKey]: e.target.value.trim()
+              })
             }
           />
         </FormItem>

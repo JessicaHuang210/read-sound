@@ -75,7 +75,7 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuActive: true
+      menuActive: false
     };
   }
 
@@ -89,6 +89,11 @@ class Header extends Component {
     this.setState({
       menuActive: false
     });
+  };
+
+  handleNavItemClick = path => {
+    this.props.history.push({ pathname: path });
+    this.handleOverlayClick();
   };
 
   render() {
@@ -116,9 +121,11 @@ class Header extends Component {
                   <IoMdAdd />
                   新增
                 </NavItemC>
-                <NavItemC>
+                <NavItemC
+                  onClick={() => this.handleNavItemClick("/searchSingers")}
+                >
                   <IoMdSearch />
-                  分類查詢
+                  歌手查詢
                 </NavItemC>
               </NavC>
             </SidebarC>
@@ -126,10 +133,10 @@ class Header extends Component {
           <HeaderC>
             <Container>
               <MenuBtnC onClick={this.handleMenuBtnClick}>
-                <IoIosMenu />
+                <IoIosMenu size={35} />
               </MenuBtnC>
               <H3 onClick={() => this.props.history.push({ pathname: "/" })}>
-                RRR
+                Read Sound
               </H3>
             </Container>
           </HeaderC>
