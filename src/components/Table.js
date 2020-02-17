@@ -37,6 +37,15 @@ class Table extends Component {
 
   static defaultProps = {
     data: [],
+    onDetailClick: () => {
+      return null;
+    },
+    onDeleteClick: () => {
+      return null;
+    },
+    onSingerClick: () => {
+      return null;
+    },
     children: null
   };
   render() {

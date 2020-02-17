@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+
 import SearchSongs from "./SearchSongs";
 import Table from "components/Table";
 
@@ -9,7 +10,8 @@ class SearchSingers extends Component {
     isLoading: false
   };
   componentDidMount() {
-    this.getSongs();
+    const { singer } = this.props.match.params;
+    this.getSongs({ singer });
   }
 
   getSongs = async (obj = {}) => {

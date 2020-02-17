@@ -36,7 +36,7 @@ class Home extends Component {
     await fetch(process.env.REACT_APP_API_URL + "/getSongs/" + id, option);
     await this.getSongs();
   };
-  handleCreatedClick = async state => {
+  handleCreateClick = async state => {
     const params = {
       name: state.name,
       singer: state.singer,
@@ -63,15 +63,14 @@ class Home extends Component {
     await this.getSongs();
   };
   hanbleSingerClick = singer => {
-    console.log(singer);
-    this.getSongs({ singer });
+    this.props.history.push({ pathname: "/searchSingers/" + singer });
   };
   render() {
     return (
       <Fragment>
         <AddSong
           isLoading={this.state.isLoading}
-          onCreatedClick={this.handleCreatedClick}
+          onCreatedClick={this.handleCreateClick}
         />
         <SearchSongs
           keyword={this.state.keyword}
