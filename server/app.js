@@ -1,9 +1,12 @@
 const express = require("express");
+const path = require("path");
+const publicPath = path.join(__dirname, "..", "public");
 require("dotenv").config();
 var cors = require("cors");
 const mongoose = require("mongoose");
 
 const app = express();
+app.use(express.static(publicPath));
 
 app.use(cors());
 // const oldDburl = "mongodb://localhost:27017/myapp"
@@ -28,4 +31,8 @@ mongoose.connection.once("open", (err, res) => {
 app.use(express.json());
 app.use("/getSongs", require("./routers/songs"));
 
-app.listen(1313, () => console.log("runing on port 1313"));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
+
+app.listen(process.env.PORT || 1313, () => console.log("runing on port 1313"));
