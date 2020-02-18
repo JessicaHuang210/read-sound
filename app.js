@@ -6,14 +6,14 @@ var cors = require("cors");
 const mongoose = require("mongoose");
 
 const app = express();
-app.use(express.static(path.join(__dirname, "..", "client/build")));
+app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use(cors());
 // const oldDburl = "mongodb://localhost:27017/myapp"
 
 const dbPsw = process.argv[2];
 console.log("dbPsw", dbPsw);
-console.log(process.env.PSW);
+console.log("PSW", process.env.PSW);
 const dbUrl = `mongodb://jess:${process.env.PSW ||
   dbPsw}@readsound-shard-00-00-wvv8y.gcp.mongodb.net:27017,readsound-shard-00-01-wvv8y.gcp.mongodb.net:27017,readsound-shard-00-02-wvv8y.gcp.mongodb.net:27017/test?ssl=true&replicaSet=readSound-shard-0&authSource=admin&retryWrites=true&w=majority`;
 mongoose.connect(dbUrl, {
