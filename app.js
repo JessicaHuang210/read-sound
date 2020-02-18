@@ -30,8 +30,8 @@ mongoose.connection.once("open", (err, res) => {
 app.use(express.json());
 app.use("/getSongs", require("./routers/songs"));
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
 
 app.listen(process.env.PORT || 1313, () => console.log("runing on port 1313"));
