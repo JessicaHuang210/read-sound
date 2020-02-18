@@ -9,7 +9,7 @@ import ErrorPage from "pages/ErrorPage";
 const BasicRoute = () => (
   <Switch>
     <Route exact path="/" component={Home} />
-    <Route exact path="/searchSingers/:singer" component={SearchSingers} />
+    <Route exact path="/searchSingers" component={SearchSingers} />
     <Route exact path="/editSong/:id" component={EditSong}></Route>
     <Route component={ErrorPage} />
   </Switch>

@@ -1,19 +1,15 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import AddSong from "../components/AddSong";
 import SearchSongs from "./SearchSongs";
 import { H3 } from "components/Typography";
 import Table from "components/Table";
 
-class Home extends Component {
-  state = {
-    songLsit: [],
-    keyword: "",
-    isLoading: false
-  };
-  componentDidMount() {
-    this.getSongs();
-  }
-  getSongs = async (obj = {}) => {
+function Home(props) {
+  const [songList, setSongList] = useState([]);
+  const [keyword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getSongs = async (obj = {}) => {
     var url = new URL(process.env.REACT_APP_API_URL + "/getSongs"),
       params = obj;
     Object.keys(params).forEach(key =>
@@ -21,22 +17,10 @@ class Home extends Component {
     );
     const res = await fetch(url);
     const list = await res.json();
-    this.setState({ songLsit: list });
+    setSongList(list);
   };
-  handleDetailClick = id => {
-    this.props.history.push({ pathname: "/EditSong/" + id });
-  };
-  handleDeleteClick = async id => {
-    const option = {
-      method: "DELETE",
-      headers: new Headers({
-        "Content-Type": "application/json"
-      })
-    };
-    await fetch(process.env.REACT_APP_API_URL + "/getSongs/" + id, option);
-    await this.getSongs();
-  };
-  handleCreateClick = async state => {
+
+  const handleCreateClick = async state => {
     const params = {
       name: state.name,
       singer: state.singer,
@@ -51,41 +35,54 @@ class Home extends Component {
       }
     });
     if (isValidateFailed) return;
-    this.setState({ isLoading: true });
+    setIsLoading(true);
     await fetch(process.env.REACT_APP_API_URL + "/getSongs", {
-      method: "POST", // or 'PUT'
-      body: JSON.stringify(params), // data can be `string` or {object}!
+      method: "POST",
+      body: JSON.stringify(params),
       headers: new Headers({
         "Content-Type": "application/json"
       })
     });
-    this.setState({ isLoading: false });
-    await this.getSongs();
+    setIsLoading(false);
+    await getSongs();
   };
-  hanbleSingerClick = singer => {
-    this.props.history.push({ pathname: "/searchSingers/" + singer });
+
+  const handleDeleteClick = async id => {
+    const option = {
+      method: "DELETE",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      })
+    };
+    await fetch(process.env.REACT_APP_API_URL + "/getSongs/" + id, option);
+    await getSongs();
   };
-  render() {
-    return (
-      <Fragment>
-        <AddSong
-          isLoading={this.state.isLoading}
-          onCreatedClick={this.handleCreateClick}
-        />
-        <SearchSongs
-          keyword={this.state.keyword}
-          onSearchSong={this.getSongs}
-        />
-        <H3>所有歌曲</H3>
-        <Table
-          onDeleteClick={this.handleDeleteClick}
-          onDetailClick={this.handleDetailClick}
-          onSingerClick={this.hanbleSingerClick}
-          data={this.state.songLsit}
-        />
-      </Fragment>
-    );
-  }
+
+  const handleDetailClick = id => {
+    props.history.push({ pathname: "/EditSong/" + id });
+  };
+
+  const hanbleSingerClick = singer => {
+    props.history.push({ pathname: "/searchSingers/" + singer });
+  };
+
+  useEffect(() => {
+    getSongs();
+  }, []);
+
+  return (
+    <Fragment>
+      <AddSong isLoading={isLoading} onCreatedClick={handleCreateClick} />
+      <SearchSongs keyword={keyword} onSearchSong={getSongs} />
+      <H3>所有歌曲</H3>
+      <Table
+        onDeleteClick={handleDeleteClick}
+        onDetailClick={handleDetailClick}
+        onSingerClick={hanbleSingerClick}
+        data={songList}
+      />
+    </Fragment>
+  );
 }
 
 export default Home;

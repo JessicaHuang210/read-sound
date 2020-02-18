@@ -1,20 +1,12 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import SearchSongs from "./SearchSongs";
 import Table from "components/Table";
+function SearchSingers() {
+  const [songList, setSongList] = useState([]);
+  const [keyword] = useState("");
 
-class SearchSingers extends Component {
-  state = {
-    songLsit: [],
-    keyword: "",
-    isLoading: false
-  };
-  componentDidMount() {
-    const { singer } = this.props.match.params;
-    this.getSongs({ singer });
-  }
-
-  getSongs = async (obj = {}) => {
+  const getSongs = async (obj = {}) => {
     var url = new URL(process.env.REACT_APP_API_URL + "/getSongs"),
       params = obj;
     Object.keys(params).forEach(key =>
@@ -22,22 +14,24 @@ class SearchSingers extends Component {
     );
     const res = await fetch(url);
     const list = await res.json();
-    this.setState({ songLsit: list });
+    setSongList(list);
   };
 
-  render() {
-    return (
-      <Fragment>
-        <SearchSongs
-          keyword={this.state.keyword}
-          onSearchSong={this.getSongs}
-          searchKey="singer"
-          placeholder="搜尋歌手..."
-        />
-        <Table data={this.state.songLsit} />
-      </Fragment>
-    );
-  }
+  useEffect(() => {
+    getSongs();
+  }, []);
+
+  return (
+    <Fragment>
+      <SearchSongs
+        keyword={keyword}
+        onSearchSong={getSongs}
+        searchKey="singer"
+        placeholder="搜尋歌手..."
+      />
+      <Table data={songList} readOnly />
+    </Fragment>
+  );
 }
 
 export default SearchSingers;

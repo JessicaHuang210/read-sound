@@ -32,6 +32,7 @@ class Table extends Component {
     onDetailClick: PropTypes.func,
     onDeleteClick: PropTypes.func,
     onSingerClick: PropTypes.func,
+    readOnly: PropTypes.bool,
     children: PropTypes.node
   };
 
@@ -46,10 +47,11 @@ class Table extends Component {
     onSingerClick: () => {
       return null;
     },
+    readOnly: false,
     children: null
   };
   render() {
-    const { data } = this.props;
+    const { data, readOnly } = this.props;
     return (
       <TableC>
         <TbodyC>
@@ -64,25 +66,27 @@ class Table extends Component {
                   </Link>
                 </TdC>
                 <TdC>{i.album || "-"}</TdC>
-                <TdC right>
-                  <Button mute small>
-                    下載
-                  </Button>
-                  <Button
-                    mute
-                    small
-                    onClick={() => this.props.onDeleteClick(i._id)}
-                  >
-                    刪除
-                  </Button>
-                  <Button
-                    mute
-                    small
-                    onClick={() => this.props.onDetailClick(i._id)}
-                  >
-                    明細
-                  </Button>
-                </TdC>
+                {readOnly ? null : (
+                  <TdC right>
+                    <Button mute small>
+                      下載
+                    </Button>
+                    <Button
+                      mute
+                      small
+                      onClick={() => this.props.onDeleteClick(i._id)}
+                    >
+                      刪除
+                    </Button>
+                    <Button
+                      mute
+                      small
+                      onClick={() => this.props.onDetailClick(i._id)}
+                    >
+                      明細
+                    </Button>
+                  </TdC>
+                )}
               </TrC>
             );
           })}
