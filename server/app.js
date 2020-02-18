@@ -11,7 +11,9 @@ const dbUser = process.argv[2];
 const dbPsw = process.argv[3];
 console.log("dbUser", dbUser);
 console.log("dbPsw", dbPsw);
-const dbUrl = `mongodb://${dbUser}:${dbPsw}@readsound-shard-00-00-wvv8y.gcp.mongodb.net:27017,readsound-shard-00-01-wvv8y.gcp.mongodb.net:27017,readsound-shard-00-02-wvv8y.gcp.mongodb.net:27017/test?ssl=true&replicaSet=readSound-shard-0&authSource=admin&retryWrites=true&w=majority`;
+const dbUrl =
+  process.env.NODE_API_URL ||
+  `mongodb://${dbUser}:${dbPsw}@readsound-shard-00-00-wvv8y.gcp.mongodb.net:27017,readsound-shard-00-01-wvv8y.gcp.mongodb.net:27017,readsound-shard-00-02-wvv8y.gcp.mongodb.net:27017/test?ssl=true&replicaSet=readSound-shard-0&authSource=admin&retryWrites=true&w=majority`;
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
