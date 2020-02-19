@@ -8,9 +8,9 @@ const mongoose = require("mongoose");
 const app = express();
 
 app.use(cors());
+const dbPsw = process.argv[2]; // 輸入密碼
 // const oldDburl = "mongodb://localhost:27017/myapp"
-app.use(express.static(path.join(__dirname, "client/build")));
-const dbPsw = process.argv[2];
+dbPsw || app.use(express.static(path.join(__dirname, "client/build")));
 console.log("dbPsw", dbPsw);
 console.log("PSW", process.env.PSW);
 const dbUrl = `mongodb://jess:${dbPsw ||
@@ -30,8 +30,9 @@ mongoose.connection.once("open", (err, res) => {
 app.use(express.json());
 app.use("/getSongs", require("./routers/songs"));
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build/index.html"));
-});
+dbPsw ||
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build/index.html"));
+  });
 
 app.listen(process.env.PORT || 1313, () => console.log("runing on port 1313"));
