@@ -17,6 +17,8 @@
     "nodemon": "^2.0.2"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "build": "webpack",
+    "heroku-postbuild": "echo Skip build on Heroku"
   }
 }
