@@ -74,7 +74,7 @@ function Home(props) {
     <Fragment>
       <AddSong isLoading={isLoading} onCreatedClick={handleCreateClick} />
       <SearchSongs keyword={keyword} onSearchSong={getSongs} />
-      <H3>所有歌曲</H3>
+      <H3>所有歌曲wertjo</H3>
       <Table
         onDeleteClick={handleDeleteClick}
         onDetailClick={handleDetailClick}
