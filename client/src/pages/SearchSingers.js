@@ -1,10 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
 
-import SearchSongs from "./SearchSongs";
 import Table from "components/Table";
-function SearchSingers() {
+function SearchSingers(props) {
   const [songList, setSongList] = useState([]);
-  const [keyword] = useState("");
 
   const getSongs = async (obj = {}) => {
     var url = new URL(process.env.REACT_APP_API_URL + "/getSongs"),
@@ -18,17 +16,12 @@ function SearchSingers() {
   };
 
   useEffect(() => {
-    getSongs();
-  }, []);
+    getSongs({ singer: props.match.params.id });
+  }, [props.match.params.id]);
 
   return (
     <Fragment>
-      <SearchSongs
-        keyword={keyword}
-        onSearchSong={getSongs}
-        searchKey="singer"
-        placeholder="搜尋歌手..."
-      />
+      <h3>{props.match.params.id}</h3>
       <Table data={songList} readOnly />
     </Fragment>
   );
