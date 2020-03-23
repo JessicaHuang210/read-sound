@@ -3,6 +3,8 @@ import AddSong from "../components/AddSong";
 import SearchSongs from "../components/SearchSongs";
 import { H3 } from "components/Typography";
 import Table from "components/Table";
+import Spin from "components/Spin";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function Home(props) {
   const [songList, setSongList] = useState([]);
@@ -43,8 +45,8 @@ function Home(props) {
         "Content-Type": "application/json"
       })
     });
-    setIsLoading(false);
     await getSongs();
+    setIsLoading(false);
   };
 
   const handleDeleteClick = async id => {
@@ -71,7 +73,12 @@ function Home(props) {
   };
 
   useEffect(() => {
-    getSongs();
+    async function fetchData() {
+      setIsLoading(true);
+      await getSongs();
+      setIsLoading(false);
+    }
+    fetchData();
   }, []);
 
   return (
@@ -79,13 +86,19 @@ function Home(props) {
       <AddSong isLoading={isLoading} onCreatedClick={handleCreateClick} />
       <SearchSongs keyword={keyword} onSearchSong={getSongs} />
       <H3>所有歌曲</H3>
-      <Table
-        onDeleteClick={handleDeleteClick}
-        onDetailClick={handleDetailClick}
-        onSingerClick={hanbleSingerClick}
-        onAlbumClick={hanbleAlbumClick}
-        data={songList}
-      />
+      {isLoading ? (
+        <Spin>
+          <AiOutlineLoading3Quarters className="icon--rotate" />
+        </Spin>
+      ) : (
+        <Table
+          onDeleteClick={handleDeleteClick}
+          onDetailClick={handleDetailClick}
+          onSingerClick={hanbleSingerClick}
+          onAlbumClick={hanbleAlbumClick}
+          data={songList}
+        />
+      )}
     </Fragment>
   );
 }

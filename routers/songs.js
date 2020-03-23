@@ -12,7 +12,9 @@ router.get("/", async (req, res) => {
   };
   try {
     const songs = await songModule.find(params); // mongoose的「查詢」用法
+    await sleep(1000);
     res.json(songs);
+    return songs;
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
