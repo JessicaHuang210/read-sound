@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import AddSong from "../components/AddSong";
-import SearchSongs from "./SearchSongs";
+import SearchSongs from "../components/SearchSongs";
 import { H3 } from "components/Typography";
 import Table from "components/Table";
 
@@ -63,7 +63,11 @@ function Home(props) {
   };
 
   const hanbleSingerClick = singer => {
-    props.history.push({ pathname: "/searchSingers/" + singer });
+    props.history.push({ pathname: "/searchSinger/" + singer });
+  };
+
+  const hanbleAlbumClick = album => {
+    props.history.push({ pathname: "/searchAlbum/" + album });
   };
 
   useEffect(() => {
@@ -79,6 +83,7 @@ function Home(props) {
         onDeleteClick={handleDeleteClick}
         onDetailClick={handleDetailClick}
         onSingerClick={hanbleSingerClick}
+        onAlbumClick={hanbleAlbumClick}
         data={songList}
       />
     </Fragment>

@@ -32,6 +32,7 @@ class Table extends Component {
     onDetailClick: PropTypes.func,
     onDeleteClick: PropTypes.func,
     onSingerClick: PropTypes.func,
+    onAlbumClick: PropTypes.func,
     readOnly: PropTypes.bool,
     children: PropTypes.node
   };
@@ -45,6 +46,9 @@ class Table extends Component {
       return null;
     },
     onSingerClick: () => {
+      return null;
+    },
+    onAlbumClick: () => {
       return null;
     },
     readOnly: false,
@@ -65,7 +69,11 @@ class Table extends Component {
                     {i.singer}
                   </Link>
                 </TdC>
-                <TdC>{i.album || "-"}</TdC>
+                <TdC>
+                  <Link onClick={() => this.props.onAlbumClick(i.album)}>
+                    {i.album}
+                  </Link>
+                </TdC>
                 {readOnly ? null : (
                   <TdC right>
                     <Button mute small>

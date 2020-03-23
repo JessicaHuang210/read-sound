@@ -7,7 +7,8 @@ const sleep = require("../utils/sleep");
 router.get("/", async (req, res) => {
   const params = {
     name: new RegExp(req.query.name || ""),
-    singer: new RegExp(req.query.singer || "")
+    singer: new RegExp(req.query.singer || ""),
+    album: new RegExp(req.query.album || "")
   };
   try {
     const songs = await songModule.find(params); // mongoose的「查詢」用法
