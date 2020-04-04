@@ -1,0 +1,2 @@
+@-webkit-keyframes spinning{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes spinning{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}.icon--rotate{-webkit-animation:spinning 1.3s linear infinite;animation:spinning 1.3s linear infinite}
+/*# sourceMappingURL=main.beb723c3.chunk.css.map */
