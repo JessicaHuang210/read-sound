@@ -1,11 +1,21 @@
+import React from "react";
 import styled from "styled-components";
-import { headerBg, smallBtnBg, fsMiddle, fcTable } from "utils/variables";
-import { darken, lighten } from "polished";
+import { headerBg } from "utils/variables";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-const Spin = styled.div`
+const SpinC = styled.div`
   font-size: 3rem;
   text-align: center;
   margin: 5rem;
   color: ${headerBg};
 `;
+
+const Spin = () => {
+  return (
+    <SpinC>
+      <AiOutlineLoading3Quarters className="icon--rotate" />
+    </SpinC>
+  );
+};
+
 export default Spin;

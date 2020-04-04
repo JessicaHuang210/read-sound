@@ -50,6 +50,7 @@ function Home(props) {
   };
 
   const handleDeleteClick = async id => {
+    setIsLoading(true);
     const option = {
       method: "DELETE",
       headers: new Headers({
@@ -58,17 +59,18 @@ function Home(props) {
     };
     await fetch(process.env.REACT_APP_API_URL + "/getSongs/" + id, option);
     await getSongs();
+    setIsLoading(false);
   };
 
   const handleDetailClick = id => {
     props.history.push({ pathname: "/EditSong/" + id });
   };
 
-  const hanbleSingerClick = singer => {
+  const handleSingerClick = singer => {
     props.history.push({ pathname: "/searchSinger/" + singer });
   };
 
-  const hanbleAlbumClick = album => {
+  const handleAlbumClick = album => {
     props.history.push({ pathname: "/searchAlbum/" + album });
   };
 
@@ -94,8 +96,8 @@ function Home(props) {
         <Table
           onDeleteClick={handleDeleteClick}
           onDetailClick={handleDetailClick}
-          onSingerClick={hanbleSingerClick}
-          onAlbumClick={hanbleAlbumClick}
+          onSingerClick={handleSingerClick}
+          onAlbumClick={handleAlbumClick}
           data={songList}
         />
       )}

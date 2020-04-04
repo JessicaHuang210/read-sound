@@ -117,7 +117,7 @@ class Header extends Component {
               className={menuActive ? "active" : ""}
             >
               <NavC>
-                <NavItemC>
+                {/* <NavItemC>
                   <IoMdAdd />
                   新增
                 </NavItemC>
@@ -126,7 +126,7 @@ class Header extends Component {
                 >
                   <IoMdSearch />
                   歌手查詢
-                </NavItemC>
+                </NavItemC> */}
               </NavC>
             </SidebarC>
           </SidebarOverlayC>
