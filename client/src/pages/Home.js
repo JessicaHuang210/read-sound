@@ -29,6 +29,8 @@ function Home(props) {
       album: state.album,
       fileName: state.fileName
     };
+    console.log(params);
+    return;
     let isValidateFailed = false;
     Object.keys(params).forEach(i => {
       if (i === "name" || i === "singer") {

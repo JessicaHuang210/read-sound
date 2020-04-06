@@ -18,6 +18,7 @@ export const FormItem = styled.div`
   align-items: center;
   margin-bottom: 2rem;
   flex-grow: 1;
+  align-items: stretch;
 `;
 
 export const FormLabel = styled.label`

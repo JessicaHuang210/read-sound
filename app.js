@@ -29,6 +29,7 @@ mongoose.connection.once("open", (err, res) => {
 
 app.use(express.json());
 app.use("/getSongs", require("./routers/songs"));
+app.use("/singers", require("./routers/singers"));
 
 dbPsw ||
   app.get("/*", (req, res) => {

@@ -11,7 +11,7 @@ const TableC = styled.table`
   margin: 2rem 0;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 `;
-
+const TheadC = styled.thead``;
 const TbodyC = styled.tbody``;
 
 const TrC = styled.tr`
@@ -19,6 +19,12 @@ const TrC = styled.tr`
   &:nth-child(even) {
     background-color: ${secondaryBg};
   }
+`;
+
+const ThC = styled.th`
+  padding: 2rem;
+  text-align: ${prop => (prop.right ? "right" : "center")};
+  border-bottom: 1px solid #eee;
 `;
 const TdC = styled.td`
   color: ${prop => (prop.head ? fcTableTitle : fcTable)};
@@ -58,6 +64,15 @@ class Table extends Component {
     const { data, readOnly } = this.props;
     return (
       <TableC>
+        <TheadC>
+          <TrC>
+            <ThC>編號</ThC>
+            <ThC>歌名</ThC>
+            <ThC>歌手</ThC>
+            <ThC>專輯</ThC>
+            {readOnly ? null : <ThC></ThC>}
+          </TrC>
+        </TheadC>
         <TbodyC>
           {data.map((i, index) => {
             return (
